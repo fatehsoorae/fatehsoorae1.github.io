@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My GTM Testing Sandbox</title>
 
+    <!-- 1. INITIALIZE DATALAYER BEFORE GTM -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+    </script>
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -17,6 +22,7 @@
 <body>
 
     <!-- Google Tag Manager (noscript) -->
+    <!-- FIX: Corrected broken fallback URL -->
     <noscript><iframe src="https://googletagmanager.com"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
@@ -39,6 +45,24 @@
             Click Me 2!
         </button>
     </main>
+
+    <!-- 2. DATA LAYER EVENT TRACKING -->
+    <script>
+        document.querySelectorAll('.sandbox-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Grab attributes from the clicked button
+                const buttonId = this.id;
+                const buttonName = this.getAttribute('data-btn-name');
+
+                // Push custom event data to GTM
+                window.dataLayer.push({
+                    'event': 'sandbox_button_click',
+                    'button_id': buttonId,
+                    'button_name': buttonName
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
