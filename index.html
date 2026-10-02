@@ -13,8 +13,9 @@
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://googletagmanager.com;
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
+    j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+    f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-PSP8BH3X');</script>
     <!-- End Google Tag Manager -->
 
@@ -22,7 +23,7 @@
 <body>
 
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://googletagmanager.com"
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSP8BH3X"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
@@ -35,12 +36,12 @@
         <p>Click the buttons below to help me practice tracking custom events.</p>
 
         <!-- Original Blue Button -->
-        <button class="sandbox-btn" id="test-click-btn" data-btn-name="Blue Button - Click Me" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        <button type="button" class="sandbox-btn" id="test-click-btn" data-btn-name="Blue Button - Click Me" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
             Click Me!
         </button>
 
         <!-- New Red Button -->
-        <button class="sandbox-btn" id="test-click-btn-2" data-btn-name="Red Button - Click Me 2" style="padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        <button type="button" class="sandbox-btn" id="test-click-btn-2" data-btn-name="Red Button - Click Me 2" style="padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
             Click Me 2!
         </button>
 
@@ -50,16 +51,16 @@
         <h2>Lead Capture Form</h2>
         <form id="sandbox-lead-form" style="text-align: left; max-width: 300px; margin: 0 auto;">
             <p>
-                <label>Full Name:</label><br>
-                <input type="text" id="user-name" style="width: 100%; padding: 5px;">
+                <label for="user-name">Full Name:</label><br>
+                <input type="text" id="user-name" name="user_name" style="width: 100%; padding: 5px;">
             </p>
             <p>
-                <label>Phone Number:</label><br>
-                <input type="tel" id="user-number" style="width: 100%; padding: 5px;">
+                <label for="user-number">Phone Number:</label><br>
+                <input type="tel" id="user-number" name="user_number" style="width: 100%; padding: 5px;">
             </p>
             <p>
-                <label>Email Address:</label><br>
-                <input type="email" id="user-email" style="width: 100%; padding: 5px;">
+                <label for="user-email">Email Address:</label><br>
+                <input type="email" id="user-email" name="user_email" style="width: 100%; padding: 5px;">
             </p>
             <button type="submit" style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; font-weight: bold; cursor: pointer;">
                 Submit Lead
@@ -95,12 +96,13 @@
             // Simple validation: If any field is empty, stop completely
             if (name === '' || number === '' || email === '') {
                 alert('Please fill out all fields.');
-                return; 
+                return;
             }
 
             // Fire GTM event only on successful validation
             window.dataLayer.push({
-                'event': 'lead_form_success'
+                'event': 'lead_form_success',
+                'form_name': 'sandbox_lead_form'
             });
 
             alert('Success! dataLayer event sent.');
