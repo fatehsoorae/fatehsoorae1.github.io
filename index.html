@@ -14,7 +14,7 @@
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    'https://googletagmanager.com;
     })(window,document,'script','dataLayer','GTM-PSP8BH3X');</script>
     <!-- End Google Tag Manager -->
 
@@ -22,44 +22,89 @@
 <body>
 
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSP8BH3X"
+    <noscript><iframe src="https://googletagmanager.com"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <header style="text-align: center; padding: 40px; background-color: #f4f4f4;">
+    <header style="text-align: center; padding: 20px; background-color: #f4f4f4;">
         <h1>Welcome to My GTM Testing Site</h1>
         <p>This is my free sandbox website for learning Google Tag Manager!</p>
     </header>
 
-    <main style="max-width: 600px; margin: 40px auto; text-align: center; font-family: sans-serif;">
+    <main style="max-width: 600px; margin: 20px auto; text-align: center; font-family: sans-serif;">
         <p>Click the buttons below to help me practice tracking custom events.</p>
 
         <!-- Original Blue Button -->
-        <button class="sandbox-btn" id="test-click-btn" data-btn-name="Blue Button - Click Me" style="padding: 15px 30px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin-right: 10px;">
+        <button class="sandbox-btn" id="test-click-btn" data-btn-name="Blue Button - Click Me" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
             Click Me!
         </button>
 
         <!-- New Red Button -->
-        <button class="sandbox-btn" id="test-click-btn-2" data-btn-name="Red Button - Click Me 2" style="padding: 15px 30px; font-size: 16px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        <button class="sandbox-btn" id="test-click-btn-2" data-btn-name="Red Button - Click Me 2" style="padding: 10px 20px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer;">
             Click Me 2!
         </button>
+
+        <br><br><hr><br>
+
+        <!-- Simplified Form -->
+        <h2>Lead Capture Form</h2>
+        <form id="sandbox-lead-form" style="text-align: left; max-width: 300px; margin: 0 auto;">
+            <p>
+                <label>Full Name:</label><br>
+                <input type="text" id="user-name" style="width: 100%; padding: 5px;">
+            </p>
+            <p>
+                <label>Phone Number:</label><br>
+                <input type="tel" id="user-number" style="width: 100%; padding: 5px;">
+            </p>
+            <p>
+                <label>Email Address:</label><br>
+                <input type="email" id="user-email" style="width: 100%; padding: 5px;">
+            </p>
+            <button type="submit" style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; font-weight: bold; cursor: pointer;">
+                Submit Lead
+            </button>
+        </form>
     </main>
 
     <!-- 2. DATA LAYER EVENT TRACKING -->
     <script>
+        // Button tracking logic
         document.querySelectorAll('.sandbox-btn').forEach(button => {
             button.addEventListener('click', function() {
-                // Grab attributes from the clicked button
                 const buttonId = this.id;
                 const buttonName = this.getAttribute('data-btn-name');
 
-                // Push custom event data to GTM
                 window.dataLayer.push({
                     'event': 'sandbox_button_click',
                     'button_id': buttonId,
                     'button_name': buttonName
                 });
             });
+        });
+
+        // Form tracking logic
+        document.getElementById('sandbox-lead-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop page reload
+
+            // Get form values
+            const name = document.getElementById('user-name').value.trim();
+            const number = document.getElementById('user-number').value.trim();
+            const email = document.getElementById('user-email').value.trim();
+
+            // Simple validation: If any field is empty, stop completely
+            if (name === '' || number === '' || email === '') {
+                alert('Please fill out all fields.');
+                return; 
+            }
+
+            // Fire GTM event only on successful validation
+            window.dataLayer.push({
+                'event': 'lead_form_success'
+            });
+
+            alert('Success! dataLayer event sent.');
+            document.getElementById('sandbox-lead-form').reset(); // Clear form
         });
     </script>
 
